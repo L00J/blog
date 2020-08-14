@@ -1,0 +1,13 @@
+wheel
+django
+Pillow
+Markdown
+Pygments
+django-mdeditor
+django-simpleui==3
+emoji
+Django-imagekit
+django-haystack==3.0b2
+jieba
+Whoosh
+django-allauth
