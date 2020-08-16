@@ -259,12 +259,12 @@ SIMPLEUI_CONFIG = {
         {
             'app': 'tutorial',
             'name': '教程',
-            'icon': 'icon fas fa-tags',
+            'icon': 'icon fa fa-book',
             'models': [
                 {
                     'name': '内容',
                     'url': 'tutorial/post/',
-                    'icon': 'fas fa-list'
+                    'icon': 'icon fas fa-book-open'
                 },
                 {
                     'name': '主题',
@@ -277,17 +277,17 @@ SIMPLEUI_CONFIG = {
         {
             'app': 'blog',
             'name': '文章',
-            'icon': 'icon fas fa-tags',
+            'icon': 'icon fa fa-university',
             'models': [
                 {
                     'name': '文章',
                     'url': 'blog/article/',
-                    'icon': 'fas fa-list'
+                    'icon': 'icon fas fa-book-open'
                 },
                 {
                     'name': '分类',
                     'url': 'blog/category/',
-                    'icon': 'icon fas fa-tags'
+                    'icon': 'icon fas fa-list'
                 },
                  {
                     'name': '标签',
@@ -297,14 +297,36 @@ SIMPLEUI_CONFIG = {
                  {
                     'name': '友情链接',
                     'url': 'blog/friendlink/',
-                    'icon': 'icon fas fa-tags'
+                    'icon': 'icon fas fa-link'
                 },
                 {
                     'name': '图片轮播',
                     'url': 'blog/carousel/',
-                    'icon': 'icon fas fa-tags'
+                    'icon': 'icon fas fa-camera-retro'
                 },
             ]
+        },
+
+        {
+            'app': 'comment',
+            'name': '评论',
+            'icon': 'icon far fa-comments',
+            'models': [
+
+                {
+                    'name': '文章评论',
+                    'url': 'comment/articlecomment/',
+                    'icon': 'icon fas fa-book-open'
+                },
+                   {
+                    'name': '提示信息',
+                    'url': 'comment/notification/',
+                    'icon': 'icon far fa-comment-dots'
+                }
+
+
+            ]
+
         },
 
        
@@ -313,12 +335,12 @@ SIMPLEUI_CONFIG = {
         {
             'app': 'account',
             'name': '邮件账号',
-            'icon': 'icon fas fa-tags',
+            'icon': 'icon fa fa-address-card',
             'models': [
                 {
                     'name': 'E-mail地址',
                     'url': 'account/emailaddress/',
-                    'icon': 'fas fa-list'
+                    'icon': 'icon fas fa-map-marker-alt'
                 },
             ]
         },
@@ -326,30 +348,30 @@ SIMPLEUI_CONFIG = {
 
         {
             'app': 'socialaccount',
-            'name': 'socialaccount',
-            'icon': 'icon fas fa-tags',
+            'name': '社交账号',
+            'icon': 'icon fa fa-puzzle-piece',
             'models': [
                 {
-                    'name': 'socialapp',
+                    'name': '社交app',
                     'url': 'socialaccount/socialapp/',
-                    'icon': 'fas fa-list'
+                    'icon': 'icon fa fa-users'
                 },
                  {
-                    'name': 'socialtoken',
+                    'name': 'token',
                     'url': 'socialaccount/socialtoken/',
-                    'icon': 'fas fa-list'
+                   'icon': 'icon fa fa-code'
                 },
                  {
-                    'name': 'socialaccoun',
+                    'name': 'account',
                     'url': 'socialaccount/socialaccount/',
-                    'icon': 'fas fa-list'
+                    'icon': 'icon fa fa-user'
                 },
             ]
         },
         {
               'name': '站点地址',
               'url': 'sites/site/',
-              'icon': 'fas fa-list'
+              'icon': 'icon fas fa-globe-americas'
         },
        
 
