@@ -11,3 +11,4 @@ django-haystack==3.0b2
 jieba
 Whoosh
 django-allauth
+django-import-export

@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from pathlib import Path, sys, os
+from pathlib import Path
+import sys, os,datetime
+today_editor = "editor/" + datetime.datetime.now().strftime('%Y%m%d')
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -38,8 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',  # 博客应用
+    'blog',  # 博客
+    'tutorial', # 教程
+    'comment', # 评论
+    'api', # drf API
     'mdeditor',  # 编辑器
+    'import_export', # 导入导出
     'oauth',  # 自定义用户应用
 
     # allauth需要注册的应用
@@ -49,7 +56,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.weibo',
     'allauth.socialaccount.providers.github',
-
 
     'haystack',  # 全文索引
 ]
@@ -164,6 +170,8 @@ USE_TZ = False  # 关闭国际时间，不然数据库报错
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -219,9 +227,22 @@ EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = 'your-webname <your-email@163.com>'
 
 # 网站默认设置和上下文信息
-SITE_END_TITLE = '网站的名称，如TendCode'
+SITE_END_TITLE = '网站的名称，如'
 SITE_DESCRIPTION = '网站描述'
 SITE_KEYWORDS = '网站关键词，多个词用英文逗号隔开'
+
+
+MDEDITOR_CONFIGS = {
+'default':{
+    'width': '90%',  # mdedit自定义编辑框宽度
+    'heigth': 500,   # 自定义编辑框高度
+    'image_folder': today_editor , # 图片保存文件夹名称
+    'upload_image_formats': [ "jpg","jpeg", "gif", "png"],  # 图片上传格式类型
+    'theme': 'default',  # 编辑框主题 ，dark / default
+    'lineWrapping': True,  # 自动换行
+    'lineNumbers': True  # 行号
+    } 
+} 
 
 
 SIMPLEUI_HOME_INFO = False  # 隐藏simpleui服务器信息
@@ -230,52 +251,126 @@ SIMPLEUI_STATIC_OFFLINE = True  # False的时候，默认从第三方的cdn获�
 
 # LOGIN_URL = 'admin/login/'
 # LOGIN_REDIRECT_URL = '/'
-# # 认证登录
-# SIMPLEUI_CONFIG = {
-#     'system_keep': False,
-#     'menus': [
+SIMPLEUI_LOGO = '/static/img/logo.png'
+SIMPLEUI_CONFIG = {
+    'system_keep': False,
+    'menus': [
 
-#         {
-#             'app': 'domain',
-#             'name': '域名管理',
-#             'icon': 'icon fas fa-tags',
-#             'models': [
-#                 {
-#                     'name': '域名',
-#                     'url': '/domain/domain_name',
-#                     # 'icon': 'fas fa-list'
-#                 },
-#                 {
-#                     'name': 'Tag',
-#                     'url': 'domain/tag',
-#                     'icon': 'icon fas fa-tags'
-#                 },
-#             ]
-#         },
+        {
+            'app': 'tutorial',
+            'name': '教程',
+            'icon': 'icon fas fa-tags',
+            'models': [
+                {
+                    'name': '内容',
+                    'url': 'tutorial/post/',
+                    'icon': 'fas fa-list'
+                },
+                {
+                    'name': '主题',
+                    'url': 'tutorial/topic/',
+                    'icon': 'icon fas fa-tags'
+                },
+            ]
+        },
 
-#         {
-#             'app': 'auth',
-#             'name': '权限认证',
-#             'icon': 'fas fa-user-shield',
-#             'models': [
-#                 {
-#                     'name': '用户',
-#                     'icon': 'fa fa-user',
-#                     'url': '/auth/user/'
-#                 },
-#                 {
-#                     'name': '用户组',
-#                     'icon': 'fa fa-user-friends',
-#                     'url': '/auth/group/'
-#                 }
+        {
+            'app': 'blog',
+            'name': '文章',
+            'icon': 'icon fas fa-tags',
+            'models': [
+                {
+                    'name': '文章',
+                    'url': 'blog/article/',
+                    'icon': 'fas fa-list'
+                },
+                {
+                    'name': '分类',
+                    'url': 'blog/category/',
+                    'icon': 'icon fas fa-tags'
+                },
+                 {
+                    'name': '标签',
+                    'url': 'blog/tag/',
+                    'icon': 'icon fas fa-tags'
+                },
+                 {
+                    'name': '友情链接',
+                    'url': 'blog/friendlink/',
+                    'icon': 'icon fas fa-tags'
+                },
+                {
+                    'name': '图片轮播',
+                    'url': 'blog/carousel/',
+                    'icon': 'icon fas fa-tags'
+                },
+            ]
+        },
 
-#             ]
-#         },
+       
+        
+
+        {
+            'app': 'account',
+            'name': '邮件账号',
+            'icon': 'icon fas fa-tags',
+            'models': [
+                {
+                    'name': 'E-mail地址',
+                    'url': 'account/emailaddress/',
+                    'icon': 'fas fa-list'
+                },
+            ]
+        },
 
 
-#         {
-#             'name': 'Github',
-#             'url': 'https://gitee.com/attacker/domain-box',
-#             'icon': 'fab fa-github'
-#         }]
-# }
+        {
+            'app': 'socialaccount',
+            'name': 'socialaccount',
+            'icon': 'icon fas fa-tags',
+            'models': [
+                {
+                    'name': 'socialapp',
+                    'url': 'socialaccount/socialapp/',
+                    'icon': 'fas fa-list'
+                },
+                 {
+                    'name': 'socialtoken',
+                    'url': 'socialaccount/socialtoken/',
+                    'icon': 'fas fa-list'
+                },
+                 {
+                    'name': 'socialaccoun',
+                    'url': 'socialaccount/socialaccount/',
+                    'icon': 'fas fa-list'
+                },
+            ]
+        },
+        {
+              'name': '站点地址',
+              'url': 'sites/site/',
+              'icon': 'fas fa-list'
+        },
+       
+
+
+       {
+            'app': 'auth',
+            'name': '权限认证',
+            'icon': 'fas fa-user-shield',
+            'models': [
+                {
+                    'name': '用户组',
+                    'icon': 'fa fa-user-friends',
+                    'url': 'auth/group'
+                },
+                # {
+                #     'name': '用户',
+                #     'icon': 'fa fa-user',
+                #     'url': 'auth/user'
+                # }
+
+            ]
+        }
+      ]        
+}
