@@ -17,10 +17,15 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.generic import TemplateView
+from django.conf.urls.static import static
+from django.views.generic import RedirectView
 
 urlpatterns = [
+    path('favicon.ico', RedirectView.as_view(url='/static/img/favicon.ico')),
     path('admin/', admin.site.urls),
-    path('mdeditor/', include('mdeditor.urls'))
+    path('mdeditor/', include('mdeditor.urls')), # 编辑器
+    path('', include('blog.urls', namespace='blog')),  # blog
 ]
 if settings.DEBUG:
     # static files (images, css, javascript, etc.)

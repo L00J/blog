@@ -1,0 +1,25 @@
+    </footer>
+      </div>
+         
+      <div class="foot-nav navbar-fixed-boottome">
+        <div class="text-center">
+          <span>CopyRight &#169;<span id="web-day"></span> &#160;<a href="http://attacker.club">晴天</a>&#160;&#160;Powered by
+            Django2</span>
+
+        <script>
+          function getnewYear() {
+            var d = new Date()
+            var old = new Date('2018/03/28')
+            var x = document.getElementById('year-info')
+            x.innerHTML = d.getFullYear()
+            var y = document.getElementById('web-day')
+            var dd = Math.floor(
+              (d.getTime() - old.getTime()) / (24 * 3600 * 1000)
+            )
+            var d_str = '| 网站已续航 ' + dd + ' 天'
+            y.innerHTML = d_str
+          }
+          getnewYear()
+        </script>
+      </div>
+    </footer>

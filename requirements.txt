@@ -12,3 +12,8 @@ jieba
 Whoosh
 django-allauth
 django-import-export
+django-tctip
+oauthlib
+requests-oauthlib
+redis
+requests

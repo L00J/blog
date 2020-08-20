@@ -16,26 +16,35 @@ class Articles_list(admin.ModelAdmin):
         return qs.filter(author=request.user)
 
     ordering = ['-gmt_modified']
-    list_display = ['title', 'category',  'cover_data','access_permissions','comment_permissions','localized_img','is_recommend','gmt_modified','author']  # 分类
+    list_display = ['title', 'category',  'cover_data','access_permissions','comment_permissions','localized_img','is_recommend','view','gmt_modified','author']  # 分类
     list_filter = ['gmt_create', 'category','tags']  # 右侧过滤栏
     list_editable = ('category','access_permissions','comment_permissions','localized_img', 'is_recommend')
     readonly_fields = ('cover_admin', )
     empty_value_display = '无数据'  # 空数据
-    fk_fields = ('tags',) # 设置显示外键字段
+    # fk_fields = ('tags',) # 设置显示外键字段
+    filter_horizontal = ('tags',)  
+    # 给多选增加一个左右添加的框
     list_per_page = 50  # 每页显示条数
 
     search_fields = ['title']  # display 展示表字段，filter过滤分类，search搜索内容
     date_hierarchy = 'gmt_create'  # 按时间分类
 
     # exclude = ('view','comment','publish') # 排除字段
-    fields = (('title', 'category'), 'body', ('tags', 'status'),
-              ( 'gmt_create','cover','access_permissions','comment_permissions','localized_img','is_recommend'))  # 指定文章发布选项
+    fields = (('title', 'category'), 'body', 'tags',
+              ( 'status','gmt_create','cover','access_permissions','comment_permissions','localized_img','is_recommend'))  # 指定文章发布选项
 
     # 重写ModelAdmin模块的save_model方法
     def save_model(self, request, obj, form, change):
         if not obj.id:
             obj.author = request.user.username
         obj.save()
+
+     # 限制用户权限，只能看到自己编辑的文章
+    def get_queryset(self, request):
+        qs = super(Articles_list, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(author=request.user)
 
 @admin.register(Category)
 class Categorys_list(admin.ModelAdmin):
